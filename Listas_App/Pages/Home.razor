@@ -1,0 +1,60 @@
+﻿@page "/"
+@using Listas_App.Services
+@using Listas_App.Models
+
+<PageTitle>LES</PageTitle>
+
+<h1>Lista Enlazada Simple</h1>
+
+
+<input type="text" name="Valor" @bind-value="Valor" />
+<button @onclick="AgregarInicio">Agregar nodo al inicio</button>
+<button @onclick="AgregarFinal">Agregar nodo al final</button>
+<br />
+<button @onclick="LimpiarLista">Limpiar Lista</button>
+
+<ul>
+    @{
+        Nodo nodoTemporal = Lista.PrimerNodo;
+        while (nodoTemporal != null)
+        {
+            <li>@nodoTemporal.Informacion</li>
+            nodoTemporal = nodoTemporal.Referencia;
+        }
+    }
+</ul>
+
+@code {
+    public string Valor { get; set; }
+    public Listas1 Lista { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Lista = new Listas1();
+        base.OnInitialized();
+    }
+
+    public void LimpiarLista()
+    {
+        Lista.LimpiarLista();
+    }
+
+    public void AgregarFinal()
+    {
+        Lista.AgregarAlFinal(CrearNodo());
+        Valor = string.Empty;
+    }
+
+    public void AgregarInicio()
+    {
+        Lista.AgregarAlInicio(CrearNodo());
+        Valor = string.Empty;
+    }
+
+    Nodo CrearNodo()
+    {
+        Nodo nuevoNodo = new Nodo(Valor);
+        return nuevoNodo;
+
+    }
+}

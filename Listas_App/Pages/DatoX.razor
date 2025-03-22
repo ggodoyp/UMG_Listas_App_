@@ -1,0 +1,88 @@
+﻿@page "/DatoX"
+@using Listas_App.Services
+@using Listas_App.Models
+
+<PageTitle>Insertar con Dato X</PageTitle>
+
+<h1>Lista Enlazada Simple</h1>
+
+<label>Ingrese Nodo</label>
+<input type="text" name="Valor" @bind-value="Valor" />
+<label>Ingrese Dato X</label>
+<input type="text" name="ValorAux" @bind-value="ValorAux" />
+
+<button @onclick="AgregarInicio">Agregar nodo al inicio</button>
+<button @onclick="AgregarFinal">Agregar nodo al final</button>
+<button @onclick="InsertarAntesDe">Agregar nodo antes de X</button>
+<button @onclick="InsertarDespuesDe">Agregar nodo despues de X</button>
+<br />
+<button @onclick="LimpiarLista">Limpiar Lista</button>
+
+<ul>
+    @{
+        Nodo nodoTemporal = Lista.PrimerNodo;
+        while (nodoTemporal != null)
+        {
+            <li>@nodoTemporal.Informacion</li>
+            nodoTemporal = nodoTemporal.Referencia;
+        }
+    }
+</ul>
+
+@code {
+    public string Valor { get; set; }
+    public string ValorAux { get; set; }
+    public Lista2_DatoX Lista { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Lista = new Lista2_DatoX();
+        base.OnInitialized();
+    }
+
+    public void LimpiarLista()
+    {
+        Lista.LimpiarLista();
+    }
+
+    public void AgregarFinal()
+    {
+        Lista.AgregarAlFinal(CrearNodo());
+        Valor = string.Empty;
+        ValorAux = string.Empty;
+    }
+
+    public void AgregarInicio()
+    {
+        Lista.AgregarAlInicio(CrearNodo());
+        Valor = string.Empty;
+        ValorAux = string.Empty;
+    }
+
+    public void InsertarAntesDe()
+    {
+        Lista.InsertarAntesDe(CrearNodoAux(), CrearNodo());
+        Valor = string.Empty;
+        ValorAux = string.Empty;
+    }
+
+    public void InsertarDespuesDe()
+    {
+        Lista.InsertarDespuesDe(CrearNodoAux(), CrearNodo());
+        Valor = string.Empty;
+        ValorAux = string.Empty;
+    }
+
+    Nodo CrearNodo()
+    {
+        Nodo nuevoNodo = new Nodo(Valor);
+        return nuevoNodo;
+
+    }
+
+    Nodo CrearNodoAux()
+    {
+        Nodo auxNodo = new Nodo(ValorAux);
+        return auxNodo;
+    }
+}
