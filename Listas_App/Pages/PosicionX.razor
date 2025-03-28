@@ -6,20 +6,25 @@
 
 <h1>Lista Enlazada Simple</h1>
 
-<label>Ingrese Nodo</label>
-<input type="text" name="Valor" @bind-value="Valor" />
-<label>Ingrese Posicion</label>
-<input type="text" name="ValorAux" @bind-value="ValorAux" />
-<br />
-<button @onclick="AgregarInicio">Agregar nodo al inicio</button>
-<button @onclick="AgregarFinal">Agregar nodo al final</button>
-<br />
-<button @onclick="InsertarEnPosicion">Agregar nodo en posicion</button>
-<button @onclick="InsertarAntesPosicion">Agregar nodo antes de posicion</button>
-<button @onclick="InsertarDespuesPosicion">Agregar nodo despues de posicion</button>
-<br />
-<button @onclick="LimpiarLista">Limpiar Lista</button>
+<div class="row">
+    <div class="col-md-5">
+        <label>Ingrese Nodo</label>
+        <input type="text" name="Valor" @bind-value="Valor" class="form-control" />
 
+        <label>Ingrese Posicion</label>
+        <input type="text" name="ValorAux" @bind-value="ValorAux" class="form-control" />
+    </div>
+    <div class="col-md-4 text-end">
+        <div class="btn-group-vertical" role="group">
+            <button class="btn btn-primary mb-1" @onclick="AgregarInicio">Agregar nodo al inicio</button>
+            <button class="btn btn-primary mb-1" @onclick="AgregarFinal">Agregar nodo al final</button>
+            <button class="btn btn-primary mb-1" @onclick="InsertarEnPosicion">Agregar nodo en posicion</button>
+            <button class="btn btn-primary mb-1" @onclick="InsertarAntesPosicion">Agregar nodo antes de posicion</button>
+            <button class="btn btn-primary mb-1" @onclick="InsertarDespuesPosicion">Agregar nodo despues de posicion</button>
+            <button class="btn btn-primary mb-1" @onclick="LimpiarLista">Limpiar Lista</button>
+        </div>
+    </div>
+</div>
 @* <ul>
     @if (Lista.PrimerNodo != null)
     {

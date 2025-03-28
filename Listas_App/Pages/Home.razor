@@ -10,7 +10,8 @@
 <input type="text" name="Valor" @bind-value="Valor" />
 <button @onclick="AgregarInicio">Agregar nodo al inicio</button>
 <button @onclick="AgregarFinal">Agregar nodo al final</button>
-<br />
+<button @onclick="EliminarInicio">Eliminar nodo al inicio</button>
+<button @onclick="EliminarFinal">Eliminar nodo al final</button>
 <button @onclick="LimpiarLista">Limpiar Lista</button>
 
 <ul>
@@ -48,6 +49,18 @@
     public void AgregarInicio()
     {
         Lista.AgregarAlInicio(CrearNodo());
+        Valor = string.Empty;
+    }
+
+    public void EliminarInicio()
+    {
+        Lista.EliminarNodoAlInicio();
+        Valor = string.Empty;
+    }
+
+    public void EliminarFinal()
+    {
+        Lista.EliminarNodoAlFinal();
         Valor = string.Empty;
     }
 
