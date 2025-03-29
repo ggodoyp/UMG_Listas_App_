@@ -6,14 +6,20 @@
 
 <h1>Lista Enlazada Simple</h1>
 
+<div class="row">
+    <div class="col-md-5">
+        <label>Ingrese Nodo</label>
+        <input type="text" name="Valor" @bind-value="Valor" />
+    </div>
 
-<input type="text" name="Valor" @bind-value="Valor" />
-<button @onclick="AgregarInicio">Agregar nodo al inicio</button>
-<button @onclick="AgregarFinal">Agregar nodo al final</button>
-<button @onclick="EliminarInicio">Eliminar nodo al inicio</button>
-<button @onclick="EliminarFinal">Eliminar nodo al final</button>
-<button @onclick="LimpiarLista">Limpiar Lista</button>
-
+    <div class="col-md-5 text-end">
+        <button class="btn btn-success mb-1" @onclick="AgregarInicio">Agregar nodo al inicio</button>
+        <button class="btn btn-success mb-1" @onclick="AgregarFinal">Agregar nodo al final</button>
+        <button class="btn btn-danger mb-1" @onclick="EliminarInicio">Eliminar nodo al inicio</button>
+        <button class="btn btn-danger mb-1" @onclick="EliminarFinal">Eliminar nodo al final</button>
+        <button class="btn btn-outline-danger mb-1" @onclick="LimpiarLista">Limpiar Lista</button>
+    </div>
+</div>
 <ul>
     @{
         Nodo nodoTemporal = Lista.PrimerNodo;
@@ -61,7 +67,7 @@
     public void EliminarFinal()
     {
         Lista.EliminarNodoAlFinal();
-        Valor = string.Empty;
+        Valor = string.Empty;        
     }
 
     Nodo CrearNodo()

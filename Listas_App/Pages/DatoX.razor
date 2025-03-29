@@ -5,18 +5,27 @@
 <PageTitle>Insertar con Dato X</PageTitle>
 
 <h1>Lista Enlazada Simple</h1>
-
-<label>Ingrese Nodo</label>
-<input type="text" name="Valor" @bind-value="Valor" />
-<label>Ingrese Dato X</label>
-<input type="text" name="ValorAux" @bind-value="ValorAux" />
-
-<button @onclick="AgregarInicio">Agregar nodo al inicio</button>
-<button @onclick="AgregarFinal">Agregar nodo al final</button>
-<button @onclick="InsertarAntesDe">Agregar nodo antes de X</button>
-<button @onclick="InsertarDespuesDe">Agregar nodo despues de X</button>
-<br />
-<button @onclick="LimpiarLista">Limpiar Lista</button>
+<div class="row">
+    <div class="col-md-3">
+        <label>Ingrese Nodo</label>
+        <input type="text" name="Valor" @bind-value="Valor" />
+        <label>Ingrese Dato X</label>
+        <input type="text" name="ValorAux" @bind-value="ValorAux" />
+        <label>Ingrese posicion del valor x a eliminar</label>
+        <input type="text" name="posicion" @bind-value="posicion" />
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-success mb-1" @onclick="AgregarInicio">Agregar nodo al inicio</button>
+        <button class="btn btn-success mb-1" @onclick="AgregarFinal">Agregar nodo al final</button>
+        <button class="btn btn-outline-success mb-1" @onclick="InsertarAntesDe">Agregar nodo antes de X</button>
+        <button class="btn btn-outline-success mb-1" @onclick="InsertarDespuesDe">Agregar nodo despues de X</button>
+        <button class="btn btn-danger mb-1" @onclick="EliminarAntesDe">Eliminar nodo antes de X</button>
+        <button class="btn btn-danger mb-1" @onclick="EliminarDespuesDe">Eliminar nodo despues de X</button>
+        <button class="btn btn-danger mb-1" @onclick="EliminarPosicionDe">Eliminar nodo por su posicion</button>
+        <button class="btn btn-outline-warning mb-1" @onclick="Ordenar">Ordenar Lista</button>
+        <button class="btn btn-outline-danger mb-1" @onclick="LimpiarLista">Limpiar Lista</button>
+    </div>
+</div>
 
 <ul>
     @{
@@ -28,11 +37,13 @@
         }
     }
 </ul>
-
+<h1>@mensaje</h1>
 @code {
     public string Valor { get; set; }
     public string ValorAux { get; set; }
     public Lista2_DatoX Lista { get; set; }
+    public string mensaje { get; set; }
+    public string posicion { get; set; }
 
     protected override void OnInitialized()
     {
@@ -48,29 +59,55 @@
     public void AgregarFinal()
     {
         Lista.AgregarAlFinal(CrearNodo());
-        Valor = string.Empty;
-        ValorAux = string.Empty;
+        Limpiar();
     }
 
     public void AgregarInicio()
     {
         Lista.AgregarAlInicio(CrearNodo());
-        Valor = string.Empty;
-        ValorAux = string.Empty;
+        Limpiar();
     }
 
     public void InsertarAntesDe()
     {
         Lista.InsertarAntesDe(CrearNodoAux(), CrearNodo());
-        Valor = string.Empty;
-        ValorAux = string.Empty;
+        Limpiar();
     }
 
     public void InsertarDespuesDe()
     {
         Lista.InsertarDespuesDe(CrearNodoAux(), CrearNodo());
+        Limpiar();
+    }
+
+    public void EliminarAntesDe()
+    {        
+        mensaje = Lista.EliminarAntesDatoX(CrearNodoAux());
+        Limpiar();
+    }
+
+    public void EliminarDespuesDe()
+    {
+        mensaje = Lista.EliminarDespuesDatoX(CrearNodoAux());
+        Limpiar();
+    }
+
+    public void EliminarPosicionDe()
+    {
+        mensaje = Lista.EliminarNodoEnPosicion(Convert.ToInt32(posicion));
+        Limpiar();
+    }
+
+    public void Ordenar()
+    {
+        Lista.OrdenarLista();    
+    }
+
+    public void Limpiar()
+    {
         Valor = string.Empty;
         ValorAux = string.Empty;
+        posicion = string.Empty;
     }
 
     Nodo CrearNodo()

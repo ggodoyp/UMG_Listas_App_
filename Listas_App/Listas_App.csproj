@@ -8,12 +8,15 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>True</Optimize>
-    <DebugType>embedded</DebugType>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <RunAOTCompilation>False</RunAOTCompilation>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>False</Optimize>
     <DebugType>embedded</DebugType>
+    <RunAOTCompilation>False</RunAOTCompilation>
   </PropertyGroup>
 
   <ItemGroup>
