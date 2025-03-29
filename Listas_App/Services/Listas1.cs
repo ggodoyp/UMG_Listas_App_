@@ -108,8 +108,8 @@ namespace Listas_App.Services
 
         public void LimpiarLista()
         {
-            UltimoNodo = new Nodo();
-            PrimerNodo = new Nodo();
+            UltimoNodo = null;
+            PrimerNodo = null;
         }
     }
 }

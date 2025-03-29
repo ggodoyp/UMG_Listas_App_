@@ -52,11 +52,11 @@ namespace Listas_App.Services
         }
 
         public void InsertarAntesDe(Nodo referencia, Nodo nuevoNodo)
-        {            
+        {
             PrimerNodo = InsertarAntesDatoX(PrimerNodo, referencia, nuevoNodo);
         }
 
-        
+
         private Nodo InsertarAntesDatoX(Nodo? actual, Nodo referencia, Nodo nuevoNodo)
         {   // Valida si la lista esta vacia o si llegamos al final.
             if (actual == null)
@@ -84,25 +84,232 @@ namespace Listas_App.Services
         private void InsertarDespuesDatoX(Nodo? actual, Nodo referencia, Nodo nuevoNodo)
         {   // Valida si la lista esta vacia o si llegamos al final.
             if (actual == null)
-                return ;
+                return;
 
             // Si encontramos el nodo con el valor de referencia, insertamos el nuevo nodo antes de el.
             if (actual.Informacion.Equals(referencia.Informacion))
             {
                 Nodo nodoNuevo = new Nodo(nuevoNodo);
                 nodoNuevo.Referencia = actual.Referencia; // Hacemos que el nuevo nodo apunte al actual.
-                actual.Referencia = nodoNuevo; 
+                actual.Referencia = nodoNuevo;
             }
 
             // Llamada recursiva para seguir buscando.
             InsertarDespuesDatoX(actual.Referencia, referencia, nuevoNodo);
-            
+
         }
 
+        public string EliminarNodoAlInicio()
+        {
+            if (EstaVacia())
+            {
+                return "La lista esta vacia.";
+            }
+
+            if (PrimerNodo == UltimoNodo)
+            {
+                PrimerNodo = UltimoNodo = null;
+            }
+            else
+            {
+                Nodo nodoAux;
+                nodoAux = PrimerNodo;
+
+                PrimerNodo = PrimerNodo.Referencia;
+                nodoAux = null;
+            }
+            return "Nodo eliminado!!";
+        }
+
+        public string EliminarNodoAlFinal()
+        {
+            if (EstaVacia())
+            {
+                return "La lista esta vacia.";
+            }
+
+            if (PrimerNodo == UltimoNodo)
+            {
+                PrimerNodo = UltimoNodo = null;
+            }
+            else
+            {
+                Nodo nodoActual;
+                Nodo nodoAux;
+
+                nodoActual = PrimerNodo;
+                nodoAux = nodoActual.Referencia;
+
+                while (nodoAux.Referencia != null)
+                {
+
+                    nodoActual = nodoActual.Referencia;
+                    nodoAux = nodoActual.Referencia;
+                }
+
+                nodoAux = null;
+                nodoActual.Referencia = null;
+                UltimoNodo = nodoActual;
+            }
+            return "Nodo final, eliminado!!";
+        }
+
+        public string EliminarAntesDatoX(Nodo valorRef)
+        {
+            Nodo nodoActual = PrimerNodo;
+            Nodo nodoAnterior = PrimerNodo;
+            Nodo nodoAnterior2 = PrimerNodo;
+
+            while (nodoActual != null && !nodoActual.Informacion.Equals(valorRef.Informacion))
+            {
+                nodoAnterior2 = nodoAnterior;
+                nodoAnterior = nodoActual;
+                nodoActual = nodoActual.Referencia;
+            }
+
+            if (nodoActual != null)
+            {
+                if (nodoActual == PrimerNodo)
+                {
+                    return "No hay nodos para eliminar";
+                }
+                else if (nodoAnterior == nodoAnterior2)
+                {
+                    EliminarNodoAlInicio();
+                }
+                else
+                {
+                    nodoAnterior2.Referencia = nodoAnterior.Referencia;
+                    nodoAnterior = null;
+                }
+
+                return "Nodo eliminado!!";
+            }
+            else
+            {
+                return $"El valor de referencia {valorRef} no fue encontrado!";
+            }
+
+        }
+
+        public string EliminarDespuesDatoX(Nodo valorRef)
+        {
+            if (PrimerNodo == null) 
+            {
+                return "No hay nodos para eliminar";
+            }
+
+            Nodo nodoActual = PrimerNodo;
+
+            while (nodoActual != null && !nodoActual.Informacion.Equals(valorRef.Informacion))
+            {
+                nodoActual = nodoActual.Referencia; 
+            }
+
+            if (nodoActual == null)
+            {
+                return $"El valor de referencia {valorRef.Informacion} no fue encontrado!";
+            }
+
+            if (nodoActual.Referencia != null)
+            {
+                Nodo nodoAEliminar = nodoActual.Referencia;
+                nodoActual.Referencia = nodoAEliminar.Referencia;
+                nodoAEliminar = null; 
+
+                return "Nodo eliminado!!";
+            }
+            else
+            {
+                return "No hay nodos después del nodo con el valor de referencia.";
+            }
+
+        }
+
+        public string EliminarNodoEnPosicion(int posicion)
+        {
+            if (PrimerNodo == null)
+            {
+                return "No hay nodos para eliminar.";
+            }
+
+            if (posicion == 0)
+            {
+                PrimerNodo = PrimerNodo.Referencia;
+                return "Nodo eliminado en la posición 0.";
+            }
+
+            Nodo nodoActual = PrimerNodo;
+            Nodo nodoAnterior = null;
+            int indice = 0;
+
+            while (nodoActual != null && indice < posicion)
+            {
+                nodoAnterior = nodoActual;
+                nodoActual = nodoActual.Referencia;
+                indice++;
+            }
+
+            if (nodoActual == null)
+            {
+                return $"No se encontró un nodo en la posición {posicion}.";
+            }
+
+            nodoAnterior.Referencia = nodoActual.Referencia;
+
+            return $"Nodo eliminado en la posición {posicion}.";
+        }
+
+        public void OrdenarLista()
+        {
+            if (PrimerNodo == null || PrimerNodo.Referencia == null) 
+            {
+                return; 
+            }
+
+            Nodo nuevaCabeza = null; 
+
+            Nodo nodoActual = PrimerNodo;
+
+            while (nodoActual != null)
+            {
+                Nodo siguienteNodo = nodoActual.Referencia;
+
+                nuevaCabeza = InsertarOrdenado(nuevaCabeza, nodoActual);
+
+                nodoActual = siguienteNodo;
+            }
+
+            PrimerNodo = nuevaCabeza;
+        }
+
+        private Nodo InsertarOrdenado(Nodo cabeza, Nodo nuevoNodo)
+        {
+          
+            if (cabeza == null || Convert.ToString(nuevoNodo.Informacion).CompareTo(cabeza.Informacion) < 0)
+            {
+                nuevoNodo.Referencia = cabeza; 
+                return nuevoNodo; 
+            }
+
+           
+            Nodo nodoActual = cabeza;
+
+            while (nodoActual.Referencia != null &&
+                   Convert.ToString(nuevoNodo.Informacion).CompareTo(nodoActual.Referencia.Informacion) >= 0)
+            {
+                nodoActual = nodoActual.Referencia;
+            }
+
+            nuevoNodo.Referencia = nodoActual.Referencia;
+            nodoActual.Referencia = nuevoNodo;
+
+            return cabeza;
+        }
         public void LimpiarLista()
         {
-            UltimoNodo = new Nodo();
-            PrimerNodo = new Nodo();
+            UltimoNodo = null;
+            PrimerNodo = null;
         }
     }
 }
